@@ -48,7 +48,7 @@ class Perceptron:
             if print_freq and i % print_freq == 0:
                 print(f"Accuracy at Iteration[{i}]: {acc}")
 
-            self.w += (misclassified_X * misclassified_y.reshape(-1, 1)).sum(axis=0).T.reshape(-1, 1)
+            self.w += learning_rate * (misclassified_X * misclassified_y.reshape(-1, 1)).sum(axis=0).T.reshape(-1, 1)
 
         return accuracy
 
