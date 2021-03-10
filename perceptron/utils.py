@@ -24,7 +24,7 @@ def hpad_ones(X):
 def load_dataset(path, header=None, padding=True):
     df = pd.read_csv(path, header=header)
 
-    X = X = df[df.columns[:-1]].to_numpy()
+    X = df[df.columns[:-1]].to_numpy()
     y = df[df.columns[-1]].to_numpy()
 
     y[y == 0] = -1
