@@ -45,6 +45,9 @@ class Perceptron:
             acc = 1 - len(misclassified_X) / X.shape[0]
             accuracy.append(acc)
 
+            if acc == 1:
+                return accuracy
+
             if print_freq and i % print_freq == 0:
                 print(f"Accuracy at Iteration[{i}]: {acc}")
 
@@ -55,11 +58,6 @@ class Perceptron:
     def test(self, X, y):
         misclassified_X, _ = self.get_misclassified(X, y) # Ignoring Misclassifed y
 
-        acc = 1 - len(misclassified_X) / X.shape[0]
+        acc = 1 - misclassified_X.shape[0] / X.shape[0]
         
         return acc
-
-
-    def performance_metrics(self, X, y):
-        pass
-
