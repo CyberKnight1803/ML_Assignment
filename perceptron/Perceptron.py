@@ -16,10 +16,14 @@ from utils import get_weight
 # 
 # TODO: Add Decision Boundary 
 
+MAX_ITERATIONS = int(1e6)
+
 class Perceptron:
     def __init__(self, num_features, initialization='Random') -> None:
         self.num_features = num_features
         self.w = get_weight((num_features, 1, initialization))
+
+        self.iterations = 0
 
     def classify(self, X):
         y = X @ self.w
@@ -42,8 +46,18 @@ class Perceptron:
         for i in tqdm(range(epochs)):
             misclassified_X, misclassified_y = self.get_misclassified(X, y)
 
-            acc = 1 - len(misclassified_X) / X.shape[0]
+            acc = 1 - misclassified_X.shape[0] / X.shape[0]
             accuracy.append(acc)
+
+            self.iterations += misclassified_X.shape[0]
+
+            if (self.iterations > MAX_ITERATIONS):
+                # np.random.shuffle(misclassified_X)
+                diff = self.iterations - MAX_ITERATIONS
+                print(f"self.iterations: {self.iterations}, misclassified shape: {misclassified_X.shape}")
+
+                misclassified_X = misclassified_X[:-diff]
+                misclassified_y = misclassified_y[:-diff]
 
             if acc == 1:
                 return accuracy
@@ -53,6 +67,11 @@ class Perceptron:
 
             self.w += learning_rate * (misclassified_X * misclassified_y.reshape(-1, 1)).sum(axis=0).T.reshape(-1, 1)
 
+            if (self.iterations > MAX_ITERATIONS):
+                self.iterations -= (self.iterations - MAX_ITERATIONS)
+                break
+
+        print(f"Trained for {self.iterations} iterations")
         return accuracy
 
     def test(self, X, y):
