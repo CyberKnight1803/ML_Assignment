@@ -2,6 +2,7 @@ import numpy as np
 from numpy import testing
 import pandas as pd
 
+
 def get_weight(shape, initialization='Random'):
     if initialization == 'Random':
         return np.random.randn(shape[0], shape[1])
@@ -16,7 +17,7 @@ def get_weight(shape, initialization='Random'):
 def hpad_ones(X):
     padding = np.ones((X.shape[0], 1))
     X = np.hstack((padding, X))
-    
+
     return X
 
 
