@@ -1,5 +1,4 @@
 import numpy as np
-from numpy import testing
 import pandas as pd
 
 
@@ -22,7 +21,7 @@ def hpad_ones(X):
 
 
 def load_dataset(path, header=None, padding=True):
-    df = pd.read_csv(path, header=header)
+    df = pd.read_csv(path, header=header).sample(frac=1)
 
     X = df[df.columns[:-1]].to_numpy()
     y = df[df.columns[-1]].to_numpy()
