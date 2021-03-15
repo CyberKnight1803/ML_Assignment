@@ -1,5 +1,11 @@
 # Linear Perceptron Model
 
+## Authors: 
+- [Omkar Pitale (2019A7PS0083H)](https://github.com/CyberKnight1803)
+- [Aditya Chopra (2019A7PS0178H)](https://github.com/adichopra11)
+- [Anuradha Pandey (2019A7PS0265H)](https://github.com/pandeyanuradha)
+
+
 ## [About the Model](Perceptron_Report.pdf)
 
 ## Using the Model
@@ -32,7 +38,7 @@ jupyter-notebook
     - Select the Mode to run in: 
       - Training and Testing on a fixed Learning Rate
       - Analysis over various Learning Rates
-      - Plotting Learning Rate vs Accuracy Curve for both Datasets (selecting path not required for this)
+      - Plotting Iteration vs Accuracy Curve for both Datasets (selecting path not required for this)
       - For example: To run a Learning Rate Analysis
         ```py
         # batch=False To use stochastic Gradient Descent instead of Batch Gradient Descent
@@ -41,8 +47,7 @@ jupyter-notebook
         # plot_training_cruves()
         ```
     - Run the [main.py](main.py) file
-
-```sh
-python main.py
-```
+        ```sh
+        python main.py
+        ```
 

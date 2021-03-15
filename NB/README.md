@@ -1,5 +1,10 @@
 # Linear Perceptron Model
 
+## Authors: 
+- [Omkar Pitale (2019A7PS0083H)](https://github.com/CyberKnight1803)
+- [Aditya Chopra (2019A7PS0178H)](https://github.com/adichopra11)
+- [Anuradha Pandey (2019A7PS0265H)](https://github.com/pandeyanuradha)
+
 ## [About the Model](NB_Report.pdf)
 
 ## Using the Model
