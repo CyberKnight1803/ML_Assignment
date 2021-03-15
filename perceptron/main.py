@@ -57,8 +57,20 @@ def find_best_lr(path, batch=True):
     return learning_rates, accuracies
 
 
-def ez(training, testing, learning_rate=1, batch=True):
+def ez(path, learning_rate=1, batch=True):
+    X, y = load_dataset(path)
+
+    # Sanity Checks
+    print(X.shape, y.shape)
+
+    training, testing = train_test_split(X, y)
+
+    # Sanity Checks
+    print(training["X"].shape, training["y"].shape,
+          testing["X"].shape, testing["y"].shape)
+
     perceptron = Perceptron(X.shape[1])
+
     accuracy = perceptron.fit(
         training["X"], training["y"], learning_rate=learning_rate, epochs=MAX_EPOCHS, print_freq=0, batch=batch)
 
@@ -109,5 +121,5 @@ if __name__ == '__main__':
     path = 'dataset_LP_2.csv'
 
     find_best_lr(path, batch=False)
-    # ez(training, testing, learning_rate=0.01, batch=False)
+    # ez(path, learning_rate=0.01, batch=False)
     # plot_training_cruves()
