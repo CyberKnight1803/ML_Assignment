@@ -22,7 +22,24 @@ jupyter-notebook
 ``` 
   
 3.  Using the cli
-
+    - Open [main.py](main.py) in Text Editor of Choice
+    - Select the dataset to test the model on. 
+        - For example: To test the Model on [Dataset 2](dataset_LP_2.csv)
+            ```py
+            # path = 'dataset_LP_1.txt'
+            path = 'dataset_LP_2.csv'
+            ```
+    - Select the Mode to run in: 
+      - Training and Testing on a fixed Learning Rate
+      - Analysis over various Learning Rates
+      - Plotting Learning Rate vs Accuracy Curve for both Datasets (selecting path not required for this)
+      - For example: To run a Learning Rate Analysis
+        ```py
+        # batch=False To use stochastic Gradient Descent instead of Batch Gradient Descent
+        find_best_lr(path, batch=False) 
+        # ez(path, learning_rate=0.01, batch=False)
+        # plot_training_cruves()
+        ```
     - Run the [main.py](main.py) file
 
 ```sh
