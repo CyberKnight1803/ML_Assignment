@@ -41,7 +41,7 @@ class LogLoss():
 
         # To avoid exploding gradients
         P = np.clip(A, 1e-15, 1 - 1e-15) 
-        dA = -(np.divide(y, P))
+        dA = - np.divide(y, P)
         return dA
 
 loss_functions = {

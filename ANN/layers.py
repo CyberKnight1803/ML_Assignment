@@ -7,6 +7,7 @@ class Layer():
     def __init__(self, l, layer_shape, activation='ReLu', initializer='He', regularizer=None):
 
         self.l = l
+        self.activation_detail = activation
         self.activation = activations[activation]()
         self.initializer = initializers[initializer]()
         self.regularizer = regularizer
@@ -34,11 +35,15 @@ class Layer():
 
         return A, Z
     
-    def backward_pass(self, dA, cache):
+    def backward_pass(self, dA, cache, y, A):
         _A, Z = cache
         m = _A.shape[1]
 
-        dZ = dA * self.activation.derivative(Z)
+        dZ = 0
+        if(self.activation_detail == 'SoftMax'):
+            dZ = A - y 
+        else:
+            dZ = dA * self.activation.derivative(Z)
 
         self.dW = np.dot(dZ, _A.T) / m
         self.db = np.sum(dZ, axis=1, keepdims=True) / m

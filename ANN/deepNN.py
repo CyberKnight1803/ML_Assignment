@@ -65,7 +65,7 @@ class DNN():
         _dA = dAL
         for l in reversed(range(self.n_layers)):
             dA = _dA
-            _dA = self.layers[l].backward_pass(dA, caches[l])
+            _dA = self.layers[l].backward_pass(dA, caches[l], y, AL)
 
     def fit(self, X, y, print_cost=False):
         self.m = X.shape[1]

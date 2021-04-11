@@ -45,21 +45,19 @@ class SoftMax():
     def __call__(self, z, stability=True):
         # Numerical Stability
         if stability:
-            self.D = np.max(z)
+            self.D = np.max(z, axis=0)
             shift = z - self.D
             t = np.exp(shift)
-            S = t / np.sum(t)
+            S = t / np.sum(t, axis=0)
             return S
 
         else:
             t = np.exp(z)
-            S = t / np.sum(t)
+            S = t / np.sum(t, axis=0)
             return S
 
     def derivative(self, z):
-        S = self.__call__(z)
-        dS = S * (1 - S)
-        return dS
+        pass
 
 activations = {
     'Sigmoid': Sigmoid,

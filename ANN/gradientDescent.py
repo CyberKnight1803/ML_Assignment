@@ -50,9 +50,14 @@ class StochasticGD(GD):
 
     
     def update(self, layers):
-        for layer in layers:
-            self.optimizer(layer)
-            self.optimizer.update(layer, self.lRate)
+        if(self.optimizer == None):
+           for layer in layers:
+            layer.W -= self.lRate * layer.dW
+            layer.b -= self.lRate * layer.db
+        else:
+            for layer in layers:
+                self.optimizer(layer)
+                self.optimizer.update(layer, self.lRate)
     
     def __call__(self, X, y, layers, mechanism, costs, itr, print_cost=True):
         m = X.shape[1]  
@@ -83,9 +88,14 @@ class MiniBatchGD(GD):
             
 
     def update(self, layers):
-        for layer in layers:
-            self.optimizer(layer)
-            self.optimizer.update(layer, self.lRate)
+        if(self.optimizer == None):
+           for layer in layers:
+            layer.W -= self.lRate * layer.dW
+            layer.b -= self.lRate * layer.db
+        else:
+            for layer in layers:
+                self.optimizer(layer)
+                self.optimizer.update(layer, self.lRate)
     
     def createBatches(self, X, y, seed=0):
 
