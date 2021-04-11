@@ -17,17 +17,6 @@ class CrossEntropy():
         
         return dA
 
-class SquareLoss():
-
-    def __call__(self, y, A):
-        Loss = 0.5 * np.power((y - A), 2)
-        return Loss
-
-    def derivative(self, y, A):
-        dA = -(y - A)
-        return dA
-
-
 # Used when last layer is SoftMax layer
 class LogLoss():
     def __call__(self, y, A):
@@ -46,6 +35,5 @@ class LogLoss():
 
 loss_functions = {
     'CrossEntropy' : CrossEntropy,
-    'SquareLoss' : SquareLoss,
     'LogLoss': LogLoss,
 }

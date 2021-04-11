@@ -32,7 +32,7 @@ class BatchGD(GD):
                 self.optimizer(layer)
                 self.optimizer.update(layer, self.lRate)
 
-        if print_cost and itr % 100 == 0:
+        if print_cost and itr % 50 == 0:
             print(f"Cost after iteration{itr}: {cost}")
 
 
@@ -69,12 +69,12 @@ class StochasticGD(GD):
             self.update(layers, itr)
         
         costs.append(cost)
-        if print_cost and itr % 10 == 0:
+        if print_cost and itr % 50 == 0:
             print(f"Cost after iteration{itr}: {cost}")
             
 
 class MiniBatchGD(GD):
-    def __init__(self, lRate=0.45, momentum=0.9, beta=0.98, batch_size=1024, optimizer=None):
+    def __init__(self, lRate=0.45, momentum=0.9, beta=0.98, batch_size=64, optimizer=None):
         super().__init__(lRate=lRate)
         self.batch_size = batch_size
         self.momentum = momentum
@@ -141,7 +141,7 @@ class MiniBatchGD(GD):
             self.update(layers)
         
         costs.append(cost)
-        if print_cost and itr % 10 == 0:
+        if print_cost and itr % 50 == 0:
             print(f"Cost after iteration{itr}: {cost}")
 
 

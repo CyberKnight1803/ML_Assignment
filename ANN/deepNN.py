@@ -7,10 +7,10 @@ from regularizations import regularizers
 
 class DNN():
 
-    def __init__(self, layer_dims, momentum=0, beta=0, lRate=0.45, n_iters=5000, activation='ReLu', initializer = 'He', GD_type='StochasticGD',
+    def __init__(self, layer_dims, momentum=0, beta=0, lRate=0.45, epochs=5000, activation='ReLu', initializer = 'He', GD_type='StochasticGD',
     batch_size=None, optimizer=None, regularizer=None, regularizer_const=0):
         self.lRate = lRate
-        self.n_iters = n_iters
+        self.epochs = epochs
         self.loss = LogLoss()
         self.optimizer = optimizer
 
@@ -76,10 +76,14 @@ class DNN():
             'compute_cost' : self.compute_cost
         }
 
-        for i in range(0, self.n_iters):
+        for i in range(0, self.epochs):
             self.GD_type(X, y, self.layers, mechanism, self.costs, i, print_cost=True)
 
         return self.costs
+    
+    def accuracy(self, X, y):
+        A, caches = self.forward_propagation(X)
+        
     
     def performance(self, X, y):
         A, caches = self.forward_propagation(X)
