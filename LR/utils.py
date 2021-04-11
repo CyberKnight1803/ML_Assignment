@@ -26,6 +26,10 @@ def load_dataset(path, header=None):
 def train_test_split(X, y):
     assert X.shape[0] == y.shape[0]
 
+    p = np.random.permutation(X.shape[0])
+    X = X[p]
+    y = y[p]
+
     length = X.shape[0]
 
     training_size = int(length * 0.7)

@@ -1,4 +1,3 @@
-from operator import le
 import numpy as np
 from tqdm import tqdm
 from utils import get_weight
@@ -25,13 +24,12 @@ def accuracy(Y, A):
 
 
 class Model:
-
     def __init__(self, num_features, initialization='Random') -> None:
         self.W = get_weight((num_features, 1), initialization)
         self.b = 0
 
     def __str__(self) -> str:
-        return f"Weights: {self.W}\nBias: {self.b}"
+        return f"Weights: {self.W.shape}\nBias: {self.b.shape}"
 
     def propagate(self, X):
         """
@@ -42,15 +40,12 @@ class Model:
 
         return A
 
-    def fit(self, X, Y, learning_rate=0.75, epochs=1000, print_cost=50, optimizer='BGD'):
+    def bgd(self, X, Y, lr=0.75, epochs=1000, print_cost=50):
         '''
         Optimize the model with the given train and test set using the given optimizers
         Apply the algorithm num_epoch times
         if print_cost, record the cost at the specified intervals
         '''
-        if (optimizer == 'SGD'):
-            return self.sgd(X, Y)
-
         costs = []
         accuracies = []
 
@@ -64,18 +59,18 @@ class Model:
             db = np.sum(dZ) / N
 
             # Make Adjustments
-            self.W -= learning_rate * dW
-            self.b -= learning_rate * db
+            self.W -= lr * dW
+            self.b -= lr * db
 
-            if print_cost and i % print_cost:
+            if print_cost and i % print_cost == 0:
                 costs.append(cross_entropy(Y, A))
                 accuracies.append(accuracy(Y, A))
 
-                print(f"[{i} Cost: {costs[-1]} Accuracy: {accuracies[-1]}")
+                # print(f"[{i} Cost: {costs[-1]} Accuracy: {accuracies[-1]}")
 
         return costs, accuracies
 
-    def sgd(self, X, Y, learning_rate=0.75, epochs=5, print_cost=50):
+    def sgd(self, X, Y, lr=0.01, epochs=50, print_cost=50):
         '''
         Optimize the model with the given train and test set using SGD
         Apply the algorithm num_epoch times
@@ -89,42 +84,44 @@ class Model:
         for i in tqdm(range(epochs)):
             for j in range(X.shape[1]):
 
-                x = X[:, j]
-                y = Y[:, j]
+                x = X[:, j].reshape(-1, 1)
+                y = Y[:, j].reshape(-1, 1)
 
-                A = self.propagate(X).reshape(-1, 1)
-                a = self.propagate(x).reshape(-1, 1)
+                A = self.propagate(X)
+                a = self.propagate(x)
 
                 dz = a - y
-                dW = (x * dz).reshape(-1, 1)
-                db = np.sum(dz)
+                dW = (x * dz)
+                db = dz
 
-                self.W -= learning_rate * dW
-                self.b -= learning_rate * db
+                self.W -= lr * dW
+                self.b -= lr * db
 
-                if print_cost and iterations % print_cost:
+                if print_cost and iterations % print_cost == 0:
                     costs.append(cross_entropy(y, a))
                     accuracies.append(accuracy(Y, A))
-
-                    print(f"[{iterations} Cost: {costs[-1]} Accuracy: {accuracies[-1]}")
+                    # print(
+                    #     f"[{iterations} Cost: {costs[-1]} Accuracy: {accuracies[-1]}")
 
                 iterations += 1
 
         return costs, accuracies
 
-    def classify(self, X):
+    def classify(self, Y):
         '''
         Classify points
         '''
-        A = self.propagate(X)
 
-        A[A < 0.5]  = 0
-        A[A >= 0.5] = 1
+        Y[Y < 0.5] = 0
+        Y[Y >= 0.5] = 1
 
-        return A
+        return Y
 
     def test(self, X, Y):
         '''
         Test the accuracy of the model on the specified test set
         '''
-        pass
+        Y_hat = self.propagate(X)
+        P = self.classify(Y_hat)
+
+        return np.mean(Y == P)
