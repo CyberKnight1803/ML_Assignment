@@ -34,11 +34,14 @@ class LogLoss():
 
         # Preventive measure to avoid division by zero
         P = np.clip(A, 1e-15, 1 - 1e-15) 
-        Loss =  np.sum(np.multiply(y, np.log(P)), axis=0)
+        Loss =  np.sum(np.multiply(y, np.log(P)), axis=0, keepdims=True)
         return Loss
 
     def derivative(self, y, A):
-        dA = -(y - A)
+
+        # To avoid exploding gradients
+        P = np.clip(A, 1e-15, 1 - 1e-15) 
+        dA = -(np.divide(y, P))
         return dA
 
 loss_functions = {
