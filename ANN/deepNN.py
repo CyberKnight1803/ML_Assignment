@@ -77,12 +77,21 @@ class DNN():
         }
 
         for i in range(0, self.epochs):
-            self.GD_type(X, y, self.layers, mechanism, self.costs, i, print_cost=True)
+            self.GD_type(X, y, self.layers, mechanism, self.costs, i, print_cost=print_cost)
 
         return self.costs
     
+    def predict(self, X):
+        A, _ = self.forward_propagation(X)
+        P = np.argmax(A, axis=0)
+        return P
+    
     def accuracy(self, X, y):
-        A, caches = self.forward_propagation(X)
+        P = self.predict(X)
+        _y = np.argmax(y, axis=0)
+
+        acc = np.sum(P == _y) / y.shape[1]
+        return acc
         
     
     def performance(self, X, y):
