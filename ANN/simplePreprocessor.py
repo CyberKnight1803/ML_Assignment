@@ -19,12 +19,20 @@ class SimplePreprocessor():
         H[Y, np.arange(N)] = 1
         return H
 
-    def Standardize(self, X, att_lst):
+    def StandardizeDF(self, X, att_lst):
         mean = X.loc[:][att_lst].mean()
         std = X.loc[:][att_lst].std()
 
         X.loc[:][att_lst] = (X.loc[:][att_lst] - mean) / std
         return X
+
+    def Standardize(self, X_train, X_test):
+        mean = np.mean(X_train, axis=1, keepdims=True)
+        std = np.std(X_train, axis=1, keepdims=True)
+
+        X_train = (X_train - mean) / std
+        X_test = (X_test - mean) / std
+        return X_train, X_test
 
     def train_test_split(self, X, y, test_size=0.30):
         N = X.shape[1]
@@ -35,4 +43,5 @@ class SimplePreprocessor():
         y_train = y[:, :trainSize]
         y_test = y[:, trainSize:]
 
+        X_train, X_test = self.Standardize(X_train, X_test)
         return X_train, X_test, y_train, y_test

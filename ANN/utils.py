@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from csv import writer
 
 def STATS(hyperparameters, layer_dims, DNN, X_train, X_test, y_train, y_test):
     costs = []
@@ -37,3 +38,12 @@ def STATS(hyperparameters, layer_dims, DNN, X_train, X_test, y_train, y_test):
 
     print('Resuls\n')
     print(df)
+
+def SAVE(ARCHITECTURE, train_acc, test_acc):
+    columns = ['layer_dims', 'lRate', 'epochs', 'activation', 'initializer', 'GD_type', 'batch_size', 'optimizer', 'optimizer_const', 'train_acc', 'test_acc']
+    with open('exp.csv', 'a') as infile:
+        data =  list(ARCHITECTURE.values()) + [train_acc] + [test_acc]
+        writer_object = writer(infile)
+        writer_object.writerow(data)
+        infile.close()
+

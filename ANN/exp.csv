@@ -1,0 +1,4 @@
+layer_dims,lRate,epochs,activation,initializer,GD_type,batch_size,optimizer,beta,train_acc,test_acc
+[6, 64, 16, 10],0.001,100,ReLu,He,StochasticGD,,Momentum,0.9,0.7578571428571429,0.755
+"[6, 64, 16, 10]",0.009,100,ReLu,He,StochasticGD,,Momentum,0.9,0.7328571428571429,0.7233333333333334
+"[6, 64, 16, 10]",0.009,300,ReLu,He,StochasticGD,,Momentum,0.9,0.7478571428571429,0.6766666666666666

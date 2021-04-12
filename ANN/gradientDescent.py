@@ -61,12 +61,13 @@ class StochasticGD(GD):
     
     def __call__(self, X, y, layers, mechanism, costs, itr, print_cost=True):
         m = X.shape[1]  
+        k = y.shape[0]
         cost = 0
         for i in range(0, m):
             AL, caches = mechanism['forward_prop'](X[:, i].reshape(-1, 1))
-            cost = mechanism['compute_cost'](y[:, i].reshape(1, -1), AL)
-            mechanism['backward_prop'](AL, y[:, i].reshape(1, -1), caches)
-            self.update(layers, itr)
+            cost = mechanism['compute_cost'](y[:, i].reshape(k, -1), AL)
+            mechanism['backward_prop'](AL, y[:, i].reshape(k, -1), caches)
+            self.update(layers)
         
         costs.append(cost)
         if print_cost and itr % 50 == 0:
