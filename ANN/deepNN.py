@@ -87,10 +87,10 @@ class DNN():
         return P
     
     def accuracy(self, X, y):
-        P = self.predict(X)
-        _y = np.argmax(y, axis=0)
+        _y = self.predict(X)
+        # _y = np.argmax(y, axis=0)
 
-        acc = np.sum(P == _y) / y.shape[1]
+        acc = np.mean(y == _y)
         return acc
         
     
