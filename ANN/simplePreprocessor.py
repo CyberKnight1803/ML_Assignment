@@ -3,6 +3,14 @@ import pandas as pd
 
 class SimplePreprocessor():
 
+    def load_dataset(self, path):
+        df = pd.read_csv(path).sample(frac=1)
+
+        X = df[df.columns[:-1]].to_numpy()
+        y = df[df.columns[-1]].to_numpy().reshape(-1, 1)
+
+        return X, y
+
     def OneHot(self, y):
         K = y.max()
         N = len(y)
