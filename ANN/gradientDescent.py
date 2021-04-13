@@ -40,7 +40,7 @@ class StochasticGD(GD):
     def __init__(self, lRate=0.45, momentum=0, beta=0, optimizer=None):
         super().__init__(lRate=lRate)
         self.momentum = momentum
-
+        self.optimizer = optimizer
         if optimizer == 'Momentum':
             self.optimizer = optimizers[optimizer](momentum)
         elif optimizer == 'RMSprop':
