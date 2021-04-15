@@ -7,7 +7,7 @@ from regularizations import regularizers
 
 class DNN():
 
-    def __init__(self, layer_dims, momentum=0, beta=0, lRate=0.45, epochs=5000, activation='ReLu', initializer = 'He', GD_type='StochasticGD',
+    def __init__(self, layer_dims, momentum=0, beta=0.99, lRate=0.45, epochs=5000, activation='ReLu', initializer = 'He', GD_type='StochasticGD',
     batch_size=None, optimizer=None, regularizer=None, regularizer_const=0):
         self.lRate = lRate
         self.epochs = epochs

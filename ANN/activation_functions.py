@@ -29,7 +29,7 @@ class ReLu():
         return dR
 
 class LeakyReLu():
-    def __init__(self, grad = 0.15):
+    def __init__(self, grad = 0.01):
         self.grad = grad
     
     def __call__(self, z):
