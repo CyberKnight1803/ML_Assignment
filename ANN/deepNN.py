@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from layers import Layer
 from loss_functions import LogLoss
 from gradientDescent import GD_variants
@@ -13,7 +14,7 @@ class DNN():
         self.epochs = epochs
         self.loss = LogLoss()
         self.optimizer = optimizer
-
+        self.acc = []
         self.regularizer = regularizer
         if regularizer != None:
             self.regularizer = regularizers[regularizer](regularizer_const)
@@ -73,7 +74,8 @@ class DNN():
         mechanism = {
             'forward_prop' : self.forward_propagation,
             'backward_prop' : self.backward_propagation,
-            'compute_cost' : self.compute_cost
+            'compute_cost' : self.compute_cost,
+            'accuracy' : self.accuracy,
         }
 
         for i in range(0, self.epochs):
@@ -91,27 +93,17 @@ class DNN():
         _y = np.argmax(y, axis=0)
 
         acc = np.mean(P == _y)
+        self.acc.append(acc)
         return acc
         
-    
-    def performance(self, X, y):
-        A, caches = self.forward_propagation(X)
-        P = np.around(A)
-        metrics = {}
-        
-        correctPred = P[P == y]
-        trueP = np.sum(correctPred == 1)
+    def costPlot(self):
+        plt.plot(np.squeeze(self.costs))
+        plt.ylabel('cost')
+        plt.xlabel('epochs')
+        plt.show()
 
-        precision = trueP / np.sum(P == 1)
-        recall = trueP / np.sum(y == 1)
-        F1Score = 2 * (precision * recall) / (precision + recall)
-
-        acc = np.sum(P == y) / y.shape[1]
-
-        metrics = { 'accuracy' : acc,
-                    'precision' : precision,
-                    'recall' : recall,
-                    'F1Score' : F1Score}
-
-        return metrics
-
+    def accPlot(self):
+        plt.plot(np.squeeze(self.acc))
+        plt.ylabel('accuracy')
+        plt.xlabel('epochs')
+        plt.show()

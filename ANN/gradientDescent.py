@@ -23,7 +23,6 @@ class BatchGD(GD):
         AL, caches = mechanism['forward_prop'](X)
         cost = mechanism['compute_cost'](y, AL)
         mechanism['backward_prop'](AL, y, caches)
-        costs.append(cost)
 
         if self.optimizer == None:
             self.update(layers)
@@ -31,7 +30,8 @@ class BatchGD(GD):
             for layer in layers:
                 self.optimizer(layer)
                 self.optimizer.update(layer, self.lRate)
-
+        costs.append(cost)
+        mechanism['accuracy'](X, y)
         if print_cost and itr % 50 == 0:
             print(f"Cost after iteration{itr}: {cost}")
 
@@ -70,6 +70,7 @@ class StochasticGD(GD):
             self.update(layers)
         
         costs.append(cost)
+        mechanism['accuracy'](X, y)
         if print_cost and itr % 50 == 0:
             print(f"Cost after iteration{itr}: {cost}")
             
@@ -142,6 +143,7 @@ class MiniBatchGD(GD):
             self.update(layers)
         
         costs.append(cost)
+        mechanism['accuracy'](X, y)
         if print_cost and itr % 50 == 0:
             print(f"Cost after iteration{itr}: {cost}")
 
