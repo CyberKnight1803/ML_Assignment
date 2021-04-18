@@ -1,3 +1,4 @@
+from typing import Counter
 import numpy as np
 from tqdm import tqdm
 from utils import get_weight
@@ -40,7 +41,7 @@ class Model:
 
         return A
 
-    def bgd(self, X, Y, lr=0.75, epochs=1000, print_cost=50):
+    def bgd(self, X, Y, lr=0.75, epochs=1000, print_cost=1):
         '''
         Optimize the model with the given train and test set using the given optimizers
         Apply the algorithm num_epoch times
@@ -48,6 +49,8 @@ class Model:
         '''
         costs = []
         accuracies = []
+
+        self.epochs = epochs
 
         for i in tqdm(range(epochs)):
             A = self.propagate(X)
@@ -78,6 +81,8 @@ class Model:
         '''
         costs = []
         accuracies = []
+
+        self.epochs = epochs
 
         iterations = 0
 
@@ -122,6 +127,22 @@ class Model:
         Test the accuracy of the model on the specified test set
         '''
         Y_hat = self.propagate(X)
-        P = self.classify(Y_hat)
+        P = self.classify(Y_hat).squeeze().tolist()
+        Y = Y.squeeze().tolist()
 
-        return np.mean(Y == P)
+        counts = Counter(zip(P, Y))
+
+        tp = counts[1, 1]
+        fp = counts[1, 0]
+        tn = counts[0, 0]
+        fn = counts[0, 1]
+
+        metrics = {}
+
+        metrics["epochs"] = self.epochs
+        metrics["accuracy"] = (tp + tn) / len(Y)
+        metrics["precision"] = tp / (tp + fp)
+        metrics["recall"] = tp / (tp + fn)
+        metrics["f1-score"] = (2 * tp) / (2 * tp + fp + fn)
+
+        return metrics
