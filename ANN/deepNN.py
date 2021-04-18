@@ -81,7 +81,7 @@ class DNN():
         for i in range(0, self.epochs):
             self.GD_type(X, y, self.layers, mechanism, self.costs, i, print_cost=print_cost)
 
-        return self.costs
+        return self.costs, self.acc
     
     def predict(self, X):
         A, _ = self.forward_propagation(X)
