@@ -10,3 +10,6 @@
 1. [Fischer's Linear Discriminant](fisher/README.md)
 2. [Naive Bayes Classifier](NB/README.md)
 3. [Linear Perceptron](perceptron/README.md)
+4. [Logistic Regression](LR/README.md)
+5. [Artificial Neural Network](ANN/README.md)
+6. [Comprehensive Analysis](sklearn/README.md)
