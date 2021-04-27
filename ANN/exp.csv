@@ -179,3 +179,5 @@ layer_dims,lRate,epochs,activation,initializer,GD_type,batch_size,optimizer,beta
 "[6, 64, 32, 10]",0.1,7000,LeakyReLu,He,MiniBatchGD,128,Momentum,0.9,,,0.8928571428571429,0.7033333333333334
 "[6, 64, 10]",0.1,15000,LeakyReLu,He,MiniBatchGD,256,Momentum,0.9,,,0.815,0.7516666666666667
 "[6, 64, 32, 10]",0.1,7000,LeakyReLu,He,MiniBatchGD,128,Momentum,0.9,,,0.8928571428571429,0.7033333333333334
+"[6, 64, 10]",0.1,15000,LeakyReLu,He,MiniBatchGD,256,Momentum,0.9,,,0.8157142857142857,0.7433333333333333
+"[6, 64, 32, 10]",0.1,7000,LeakyReLu,He,MiniBatchGD,128,Momentum,0.9,,,0.8928571428571429,0.7033333333333334
